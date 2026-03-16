@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Workers from "./pages/Workers";
 import Attendance from "./pages/Attendance";
 import Reports from "./pages/Reports";
+import WorkerCheckIn from "./pages/WorkerCheckIn";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -16,15 +17,23 @@ const App = () => (
     <TooltipProvider>
       <Sonner position="top-right" />
       <BrowserRouter>
-        <AppLayout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/workers" element={<Workers />} />
-            <Route path="/attendance" element={<Attendance />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AppLayout>
+        <Routes>
+          {/* Worker self-service - no sidebar */}
+          <Route path="/check-in" element={<WorkerCheckIn />} />
+
+          {/* Admin pages with sidebar */}
+          <Route path="*" element={
+            <AppLayout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/workers" element={<Workers />} />
+                <Route path="/attendance" element={<Attendance />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AppLayout>
+          } />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
